@@ -3,3 +3,5 @@
 -- insert into myentity (id, field) values(nextval('hibernate_sequence'), 'field-1');
 -- insert into myentity (id, field) values(nextval('hibernate_sequence'), 'field-2');
 -- insert into myentity (id, field) values(nextval('hibernate_sequence'), 'field-3');
+
+--insert into Client (id, name, age, vat, email) values (999, 'a', 17, 'AA123456789', 'a@a.com');

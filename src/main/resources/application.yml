@@ -1,6 +1,13 @@
 greeting:
   message: "hello"
 quarkus:
+  datasource:
+    db-kind: "h2"
+    jdbc:
+      url: "jdbc:h2:mem:default;DB_CLOSE_DELAY=-1;INIT=RUNSCRIPT FROM 'classpath:data.sql'"
   hibernate-orm:
+    dialect: "org.hibernate.dialect.H2Dialect"
+    log:
+      sql: "true"
     database:
       generation: "drop-and-create"
