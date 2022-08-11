@@ -56,10 +56,10 @@ public class ClientResource {
     public Response apagaCliente(@PathParam("id") Long id) {
         try {
             Client.deleteById(id);
+            return Response.noContent().build();
         } catch (PersistenceException e) {
             e.printStackTrace();
             return Response.serverError().build();
         }
-        return Response.noContent().build();
     }
 }

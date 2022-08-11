@@ -3,19 +3,31 @@ package org.exemplo.model;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 @Entity
 public class Client extends PanacheEntityBase {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @Column
+    @Column(nullable = false)
+    @NotBlank
+    @Size(min = 5, max = 100)
     private String name;
-    @Column
+    @Column(nullable = false)
+    @NotBlank
+    @Min(18)
     private int age;
-    @Column
+    @Column(nullable = false)
+    @NotBlank
+    @Pattern(regexp = "^[\\p{Upper}]{2}[\\d]{9}$")
     private String vat;
-    @Column
+    @Column(nullable = false)
+    @NotBlank
+    @Pattern(regexp = "^\\S+@\\S+$")
     private String email;
 
     public Client() {}
