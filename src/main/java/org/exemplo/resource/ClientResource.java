@@ -1,7 +1,9 @@
 package org.exemplo.resource;
 
 import org.exemplo.model.Client;
+import org.exemplo.repository.ClientRepository;
 
+import javax.inject.Inject;
 import javax.persistence.PersistenceException;
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
@@ -14,16 +16,19 @@ import static javax.ws.rs.core.Response.ok;
 @Path("/client")
 @Produces(MediaType.APPLICATION_JSON)
 public class ClientResource {
+    @Inject
+    ClientRepository clientRepository;
+
     @GET
     @Path("/list")
     public List<Client> listaClientes() {
-        return Client.listAll();
+        return clientRepository.listAll();
     }
 
     @POST
     @Transactional
     public Response criaCliente(Client client) {
-        Client.persist(client);
+        clientRepository.persist(client);
         return ok(client)
                 .status(201)
                 .build();
@@ -34,12 +39,12 @@ public class ClientResource {
     @Transactional
     public Response alteraCliente(@PathParam("id") Long id, Client cliente) {
         try {
-            Client clienteData = Client.findById(id);
+            Client clienteData = clientRepository.findById(id);
             clienteData.setAge(cliente.getAge());
             clienteData.setName(cliente.getName());
             clienteData.setVat(cliente.getVat());
             clienteData.setEmail(cliente.getEmail());
-            clienteData.persist();
+            clientRepository.persist(clienteData);
             return Response
                     .ok(clienteData)
                     .status(204)
@@ -55,7 +60,7 @@ public class ClientResource {
     @Transactional
     public Response apagaCliente(@PathParam("id") Long id) {
         try {
-            Client.deleteById(id);
+            clientRepository.deleteById(id);
             return Response.noContent().build();
         } catch (PersistenceException e) {
             e.printStackTrace();
