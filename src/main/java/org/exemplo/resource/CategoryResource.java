@@ -36,7 +36,7 @@ public class CategoryResource {
     public Response alteraCategoria(@PathParam("id") Long id, Category category) {
         try {
             Category categoryData = categoryRespository.findById(id);
-            categoryData.setNome(category.getNome());
+            categoryData.setName(category.getName());
 
             categoryRespository.persist(categoryData);
             return Response.ok().status(204).build();
@@ -44,7 +44,6 @@ public class CategoryResource {
             e.printStackTrace();
             return Response.serverError().build();
         }
-
     }
 
     @DELETE

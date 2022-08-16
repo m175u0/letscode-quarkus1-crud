@@ -1,14 +1,10 @@
 package org.exemplo.model;
 
-import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
-
 import javax.persistence.*;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 
 @Entity
+@Table(name = "CLIENT")
 public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,7 +14,7 @@ public class Client {
     @Size(min = 5, max = 100)
     private String name;
     @Column(nullable = false)
-    @NotBlank
+    @NotNull
     @Min(18)
     private int age;
     @Column(nullable = false)
@@ -30,14 +26,26 @@ public class Client {
     @Pattern(regexp = "^\\S+@\\S+$")
     private String email;
 
+    @ManyToOne(cascade = CascadeType.ALL)
+    private Category category;
+
     public Client() {}
 
-    public Client(long id, String name, int age, String vat, String email) {
+    public Client(long id, String name, int age, String vat, String email, Category category) {
         this.id = id;
         this.name = name;
         this.age = age;
         this.vat = vat;
         this.email = email;
+        this.category = category;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     public long getId() {
